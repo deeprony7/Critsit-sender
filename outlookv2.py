@@ -30,7 +30,7 @@ print('Application affected: ', critsit.var1)
 print('Issue: ', critsit.var2)
 print('Incident Reported Date and Time: ', critsit.var3)
 print('Slack Subchannel: ', critsit.var4)
-print('Issue Description - Initial report(enter info in single line): ', critsit.var5)
+print('Issue Description - Initial report: ', critsit.var5)
 print('Your email-id: ', FROM)
 print('Sending To: ', TO)
 
