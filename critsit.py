@@ -1,10 +1,12 @@
 # Create the HTML version of the message
 
-var1 = input('Application affected: ')
-var2 = input('Issue: ')
-var3 = input('Incident Reported Date and Time: ')
-var4 = input('Slack Subchannel: ')
-var5 = input('Issue Description - Initial report(enter info in single line): ')
+# var1 = input('Application affected: ')
+# var2 = input('Issue: ')
+# var3 = input('Incident Reported Date and Time: ')
+# var4 = input('Slack Subchannel: ')
+# var5 = input('Issue Description - Initial report(enter info in single line): ')
+
+var1 = var2 = var3 = var4 = var5 = ''
 
 html = f"""\
 <div class="OutlineElement Ltr  BCX2 SCXW140673802" style="direction: ltr;">
