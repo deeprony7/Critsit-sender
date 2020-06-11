@@ -2,7 +2,6 @@
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import smtplib
-# import critsit
 import getpass
 
 
@@ -18,7 +17,6 @@ def login():
     s.starttls()
     
     try:
-        # login()
         s.login(FROM, PASSWORD)
         print("\nLogged in successfully!\n")
     except Exception:
@@ -27,23 +25,21 @@ def login():
 login()
 
 message = MIMEMultipart()
-message["Subject"] = input('Subject: ')
 
-# FROM = input('Enter Cengage email-id: ')
 TO = "shalder@smartshifttech.com" # can be a list
-# PASSWORD = getpass.getpass('Enter Cengage Password: ')
-
-
 message["From"] = FROM
 message["To"] = TO
 
 def get_details():
-    global var1, var2, var3, var4, var5
+    global var1, var2, var3, var4, var5, subject
     var1 = input('Application affected: ')
     var2 = input('Issue: ')
     var3 = input('Incident Reported Date and Time: ')
     var4 = input('Slack Subchannel: ')
     var5 = input('Issue Description - Initial report(enter info in single line): ')
+    message["Subject"] = input('Subject: ')
+    subject = message["Subject"]
+
 
 def input_data_into_html(var1, var2, var3, var4, var5):
     global html
@@ -371,10 +367,11 @@ def input_data_into_html(var1, var2, var3, var4, var5):
     """
 
 # Output details for verification
-def verify_details(var1m, var2m, var3m, var4m, var5m):
+def verify_details(var1m, var2m, var3m, var4m, var5m, subjectm):
     input_data_into_html(var1m, var2m, var3m, var4m, var5m)
+    message["Subject"] = subjectm
     print('\n-----------Verify entered details---------------\n')
-    print('[1] Subject: ', message["Subject"])
+    print('[1] Subject: ', subjectm)
     print('[2] Application affected: ', var1m)
     print('[3] Issue: ', var2m)
     print('[4] Incident Reported Date and Time: ', var3m)
@@ -385,37 +382,32 @@ def verify_details(var1m, var2m, var3m, var4m, var5m):
     send = input("Enter y to send. To modify any field, enter the corresponding field's number: ")
 
     if send.lower() == 'y':
-        send_mail()
+        return send_mail()
+    elif send.lower() == 'n':
+        return print('\nExiting App...')
     elif send == '1': 
-        message["Subject"] = input('Subject: ') 
-        return verify_details(var1m, var2m, var3m, var4m, var5m)
+        subjectm = input('Subject: ')
+        return verify_details(var1m, var2m, var3m, var4m, var5m,subjectm)
     elif send == '2': 
         var1m = input('Application affected: ')
-        return verify_details(var1m, var2m, var3m, var4m, var5m)
+        return verify_details(var1m, var2m, var3m, var4m, var5m, subjectm)
     elif send == '3': 
         var2m = input('Issue: ')
-        return verify_details(var1m, var2m, var3m, var4m, var5m)
+        return verify_details(var1m, var2m, var3m, var4m, var5m, subjectm)
     elif send == '4': 
         var3m = input('Incident Reported Date and Time: ')
-        return verify_details(var1m, var2m, var3m, var4m, var5m)
+        return verify_details(var1m, var2m, var3m, var4m, var5m, subjectm)
     elif send == '5': 
         var4m = input('Slack Subchannel: ')
-        return verify_details(var1m, var2m, var3m, var4m, var5m)
+        return verify_details(var1m, var2m, var3m, var4m, var5m, subjectm)
     elif send == '6':
         var5m = input('Issue Description - Initial report(enter info in single line): ')
-        return verify_details(var1m, var2m, var3m, var4m, var5m)
+        return verify_details(var1m, var2m, var3m, var4m, var5m, subjectm)
     else:
-        print('Invalid input')
-        return verify_details(var1m, var2m, var3m, var4m, var5m)
-
-# def transform_to_html():
-    # # Turn these into plain/html MIMEText objects
-    # part1 = MIMEText(critsit.html, "html")
-    # # Add HTML/plain-text parts to MIMEMultipart message
-    # message.attach(part1)
+        print('Invalid input\n')
+        return verify_details(var1m, var2m, var3m, var4m, var5m, subjectm)
 
 def send_mail():
-    # transform_to_html()
     # Turn these into plain/html MIMEText objects
     part1 = MIMEText(html, "html")
     # Add HTML/plain-text parts to MIMEMultipart message
@@ -424,21 +416,8 @@ def send_mail():
     s.sendmail(FROM, TO, message.as_string())
     s.quit()
     print("Sent!")
-    # s = smtplib.SMTP(host=SERVER, port=587)
-    # s.starttls()
-    # try:
-    #     login()
-    #     s.login(FROM, PASSWORD)
-    # except Exception:
-    #     print("Login unsuccessful. Please re-enter credentials.")
-    #     send_mail()
 
-    # send = input("Enter y to send. To modify any field, enter the corresponding field's number: ")
-
-    
 get_details()  
-# input_data_into_html()   
-verify_details(var1, var2, var3, var4, var5)
-# send_mail()
+verify_details(var1, var2, var3, var4, var5, subject)
 
 input("Press ENTER key to close...\n") #required for stand-alone exe file
