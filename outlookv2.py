@@ -26,7 +26,8 @@ login()
 
 message = MIMEMultipart()
 
-TO = "shalder@smartshifttech.com" # can be a list
+# TO = "shalder@smartshifttech.com" # can be a list
+TO = input("Enter TO email-id: ")
 message["From"] = FROM
 message["To"] = TO
 
