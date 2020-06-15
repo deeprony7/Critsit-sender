@@ -13,7 +13,7 @@ def login():
     PASSWORD = getpass.getpass('Enter Cengage Password: ')
     SERVER = "smtp.office365.com"
     global s
-    s = smtplib.SMTP(host=SERVER, port=587)
+    s = smtplib.SMTP(host=SERVER, port=587,timeout=(15*60))
     s.starttls()
     
     try:
